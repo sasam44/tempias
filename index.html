@@ -92,6 +92,46 @@ h1 {
   color: #e0e0ff;
 }
 
+/* Built with Antseed badge */
+.built-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #d5ffef;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,255,157,0.4);
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(0,255,157,0.15);
+}
+.built-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(0,255,157,0.18);
+  box-shadow: 0 0 22px rgba(0,255,157,0.45);
+  color: #fff;
+}
+.built-badge b {
+  color: #00ff9d;
+  font-weight: 700;
+}
+.built-badge .seed-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00ff9d, #00e5ff);
+  box-shadow: 0 0 8px #00ff9d;
+  animation: seedpulse 2s ease-in-out infinite;
+}
+@keyframes seedpulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
 /* Main clock */
 .main-clock-wrap {
   display: flex;
@@ -553,6 +593,9 @@ h1 {
 
 <div class="container">
   <header>
+    <a class="built-badge" href="https://x.com/AntSeed" target="_blank" rel="noopener">
+      <span class="seed-dot"></span> 🜂 built with <b>antseed</b>
+    </a>
     <h1 id="appTitle">🌍 World Clock & Cuaca</h1>
     <div class="subtitle" id="appSubtitle">🕒 Timer Real-Time Seluruh Dunia • ⛅ Cuaca Terkini & Prediksi</div>
     <div class="lang-bar" id="langBar">
