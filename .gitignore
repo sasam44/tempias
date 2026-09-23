@@ -1,0 +1,11 @@
+# Logs
+server.log
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Antseed / workspace
+node_modules/
+.antseed/

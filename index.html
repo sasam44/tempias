@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌧️ Tempias — Jam & Cuaca Seluruh Dunia</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  --grad-1: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+  --grad-2: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background stars */
+.stars, .twinkling {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  display: block;
+  z-index: -2;
+}
+.stars {
+  background: #000 url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWwiIGJhc2VGcmVxdWVuY3k9IjAuNyIgbnVtT2N0YXZlcz0iMiIgc3R5bGU9InR1cmJ1bGVuY2U6c2NhdHRlciIvPjwvZmlsdGVyPjxjaXJjbGUgcj0iMiIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+') repeat;
+  animation: starsmoves 200s linear infinite;
+}
+@keyframes starsmoves {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; }
+}
+
+/* Floating colorful blobs */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  z-index: -1;
+  animation: float 20s ease-in-out infinite;
+}
+.blob-1 { width: 400px; height: 400px; background: #ff6b6b; top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: #4ecdc4; top: 60%; right: -100px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: #a29bfe; top: 30%; left: 40%; animation-delay: -10s; }
+.blob-4 { width: 250px; height: 250px; background: #feca57; bottom: -50px; left: 20%; animation-delay: -15s; }
+@keyframes float {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-40px) scale(1.1); }
+  66% { transform: translate(-20px,20px) scale(0.9); }
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 6s ease infinite;
+  text-shadow: none;
+}
+@keyframes rainbow {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-top: 8px;
+  color: #e0e0ff;
+}
+
+/* Main clock */
+.main-clock-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.clock-box {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  padding: 30px 50px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.main-location {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  margin-bottom: 10px;
+  color: #00ff9d;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  font-weight: 600;
+}
+.main-clock {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(3rem, 9vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #00ff9d;
+  text-shadow: 0 0 18px rgba(0,255,157,0.6), 0 2px 6px rgba(0,0,0,0.8);
+}
+.main-date {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #7dffc4;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  background: rgba(255,80,80,0.2);
+  border: 1px solid #ff6b6b;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+.live-dot {
+  width: 10px; height: 10px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(255,107,107,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
+}
+
+/* City cards grid */
+.cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+.city-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.city-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.city-card.selected {
+  border-color: #ffd93d;
+  box-shadow: 0 0 30px rgba(255,217,61,0.3);
+}
+.city-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.city-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00ff9d;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.8);
+}
+.city-country {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  color: #9dffd4;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.card-clock {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 15px 0 5px;
+  color: #00ff9d;
+  text-shadow: 0 0 12px rgba(0,255,157,0.45), 0 1px 4px rgba(0,0,0,0.8);
+}
+.card-date {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  color: #7dffc4;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.city-header, .city-card > div {
+  position: relative;
+  z-index: 3;
+}
+.weather-zone {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.9rem;
+}
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.weather-icon {
+  font-size: 2rem;
+  animation: bounce 3s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.temp {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.small {
+  opacity: 0.75;
+  font-size: 0.8rem;
+}
+.weather-detail {
+  margin-top: 6px;
+}
+.weather-anim {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Loading skeleton */
+.loading {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Weather animations layers */
+.anim-layer {
+  position: absolute;
+  pointer-events: none;
+}
+/* Clouds */
+.cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50px;
+  animation: drift 30s linear infinite;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+}
+.cloud::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+.cloud::after { width: 35px; height: 35px; top: -15px; right: 15px; }
+
+/* Rain */
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(transparent, #4ecdc4);
+  animation: rainFall 0.8s linear infinite;
+}
+@keyframes rainFall {
+  0% { transform: translateY(-20px); opacity: 1; }
+  100% { transform: translateY(120px); opacity: 0; }
+}
+/* Snow */
+.snowflake {
+  position: absolute;
+  color: #fff;
+  animation: snowFall 5s linear infinite;
+  text-shadow: 0 0 5px #fff;
+}
+@keyframes snowFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(130px) rotate(360deg); opacity: 0.5; }
+}
+/* Lightning */
+.lightning {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: flash 6s infinite;
+}
+@keyframes flash {
+  0%, 82%, 84%, 100% { opacity: 0; transform: scale(0.5); }
+  83% { opacity: 1; transform: scale(1.2); }
+}
+/* Fog */
+.fog-cloud {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background: rgba(255,255,255,0.2);
+  filter: blur(20px);
+  animation: fogmove 8s ease-in-out infinite;
+}
+@keyframes fogmove {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(-30px); }
+}
+/* Sun rays */
+.sun-rays {
+  position: absolute;
+  top: 15px; left: 15px;
+  font-size: 2.5rem;
+  animation: spin 15s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Language switcher */
+.lang-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 20px 5px;
+}
+.lang-btn {
+  padding: 9px 18px;
+  border-radius: 30px;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(8px);
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.lang-btn.active {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+  color: #1a1a4e;
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(161,140,209,0.6);
+}
+
+/* Search */
+.search-box {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+}
+.search-box input {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px 25px;
+  border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+}
+.search-box input::placeholder { color: rgba(255,255,255,0.5); }
+.search-box input:focus {
+  border-color: #a18cd1;
+  box-shadow: 0 0 20px rgba(161,140,209,0.4);
+}
+
+/* Modal / Forecast */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: linear-gradient(135deg, #2b2b5e, #1a1a4e);
+  background: rgba(20,20,50,0.95);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  position: relative;
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes modalPop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-close {
+  position: absolute;
+  top: 15px; right: 15px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.modal-close:hover { background: #ff6b6b; transform: rotate(90deg); }
+.modal-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 5px;
+  color: #ffd93d;
+}
+.modal-now {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  margin-bottom: 15px;
+}
+.modal-now .w-icon { font-size: 4rem; animation: bounce 2s infinite; }
+.modal-temp-big { font-size: 3rem; font-weight: 700; }
+.modal-clock { font-size: 1.3rem; font-family: 'Fredoka'; color: #a1c4fd; }
+.forecast-title {
+  font-family: 'Fredoka';
+  font-size: 1.2rem;
+  margin: 15px 0;
+  color: #a18cd1;
+}
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+.forecast-day {
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.forecast-day:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); }
+.forecast-day .day { font-weight: 600; opacity: 0.9; }
+.forecast-day .f-icon { font-size: 2rem; margin: 8px 0; animation: bounce 3s infinite; }
+.forecast-day .f-temp { font-weight: 700; font-size: 1.2rem; }
+.hourly-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+.hourly-item {
+  min-width: 80px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+.footer a { color: #a1c4fd; }
+.hint {
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  padding-top: 5px;
+}
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0,0,0,0.85);
+  padding: 14px 25px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 200;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.err-msg {
+  color:#ff6b6b; font-size:0.8rem; margin-top:6px; text-align:center;
+}
+.hidden { display: none; }
+.loading-indicator {
+  display: flex; justify-content:center; align-items:center; gap:10px;
+  padding:30px; color:#a1c4fd;
+}
+.spinner {
+  width: 25px; height: 25px;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: #a18cd1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+::-webkit-scrollbar { height: 8px; width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: #a18cd1; border-radius: 10px; }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="twinkling"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
+
+<div class="container">
+  <header>
+    <h1 id="appTitle">🌍 World Clock & Cuaca</h1>
+    <div class="subtitle" id="appSubtitle">🕒 Timer Real-Time Seluruh Dunia • ⛅ Cuaca Terkini & Prediksi</div>
+    <div class="lang-bar" id="langBar">
+      <button class="lang-btn active" data-lang="id" onclick="setLang('id')">🇮🇩 Indonesia</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">🇨🇳 中文</button>
+    </div>
+  </header>
+
+  <div class="main-clock-wrap">
+    <div class="clock-box">
+      <div class="main-location" id="mainLocation">📍 Jakarta, Indonesia</div>
+      <div class="main-clock" id="mainClock">--:--:--</div>
+      <div class="main-date" id="mainDate">--</div>
+      <div class="live-badge"><span class="live-dot"></span> <span id="liveBadgeText">LIVE · Real Time</span></div>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Cari kota / negara...">
+  </div>
+  <div class="hint" id="hintText">💡 Klik kartu kota untuk melihat cuaca detail & prediksi 7 hari</div>
+
+  <div id="loadingIndicator" class="loading-indicator">
+    <div class="spinner"></div> <span id="loadingText">Memuat data cuaca seluruh dunia...</span>
+  </div>
+
+  <div class="cities-grid" id="citiesGrid"></div>
+
+  <div class="footer" id="footerText">
+    Data cuaca real-time dari <a href="https://open-meteo.com" target="_blank">Open-Meteo</a> · Sumber tepercaya &amp; gratis tanpa API key<br>
+    Waktu berdasarkan zona waktu w3c /time.is
+  </div>
+</div>
+
+<!-- Forecast Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle">City</div>
+    <div class="small" id="modalTimezone" style="margin-bottom:10px"></div>
+    <div class="modal-now">
+      <span class="w-icon" id="modalIcon">☀️</span>
+      <div>
+        <div class="modal-temp-big" id="modalTemp">--°</div>
+        <div class="small" id="modalDesc">--</div>
+      </div>
+      <div style="margin-left:auto; text-align:right">
+        <div class="modal-clock" id="modalClock">--:--</div>
+        <div class="small" id="modalDate">--</div>
+      </div>
+    </div>
+    <div class="small" id="modalDetails" style="margin-bottom:10px"></div>
+
+    <div class="forecast-title" id="hourlyTitle">📈 Prediksi Per Jam (6 jam ke depan)</div>
+    <div class="hourly-scroll" id="hourlyScroll"></div>
+
+    <div class="forecast-title" id="forecastTitle">🗓️ Prakiraan Cuaca 7 Hari</div>
+    <div class="forecast-grid" id="forecastGrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ CITIES DATABASE ============
+// name, country, lat, lon, timezone, flag
+const CITIES = [
+  // ===== INDONESIA =====
+  { name: "Jakarta", country: "Indonesia", lat: -6.2088, lon: 106.8456, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Jakarta", en: "Jakarta", zh: "雅加达", aliases: ["jakarta","dki","雅加达","雅京"] },
+  { name: "Surabaya", country: "Indonesia", lat: -7.2575, lon: 112.7521, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Surabaya", en: "Surabaya", zh: "泗水", aliases: ["surabaya","泗水"] },
+  { name: "Bandung", country: "Indonesia", lat: -6.9147, lon: 107.6098, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Bandung", en: "Bandung", zh: "万隆", aliases: ["bandung","万隆"] },
+  { name: "Medan", country: "Indonesia", lat: 3.5952, lon: 98.6722, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Medan", en: "Medan", zh: "棉兰", aliases: ["medan","棉兰"] },
+  { name: "Semarang", country: "Indonesia", lat: -6.9667, lon: 110.4167, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Semarang", en: "Semarang", zh: "三宝垄", aliases: ["semarang","三宝垄"] },
+  { name: "Makassar", country: "Indonesia", lat: -5.1477, lon: 119.4327, tz: "Asia/Makassar", flag: "🇮🇩", id: "Makassar", en: "Makassar", zh: "望加锡", aliases: ["makassar","望加锡"] },
+  { name: "Palembang", country: "Indonesia", lat: -2.9909, lon: 104.7568, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Palembang", en: "Palembang", zh: "巨港", aliases: ["palembang","巨港"] },
+  { name: "Yogyakarta", country: "Indonesia", lat: -7.7956, lon: 110.3695, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Yogyakarta", en: "Yogyakarta", zh: "日惹", aliases: ["yogyakarta","jogja","日惹"] },
+  { name: "Denpasar / Bali", country: "Indonesia", lat: -8.6705, lon: 115.2126, tz: "Asia/Makassar", flag: "🇮🇩", id: "Denpasar", en: "Denpasar (Bali)", zh: "登巴萨/巴厘岛", aliases: ["denpasar","bali","巴厘岛","登巴萨"] },
+  { name: "Batam", country: "Indonesia", lat: 1.0456, lon: 104.0305, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Batam", en: "Batam", zh: "巴淡", aliases: ["batam","巴淡"] },
+  { name: "Pekanbaru", country: "Indonesia", lat: 0.5071, lon: 101.4478, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Pekanbaru", en: "Pekanbaru", zh: "北干巴鲁", aliases: ["pekanbaru","北干巴鲁"] },
+  { name: "Banjarmasin", country: "Indonesia", lat: -3.3186, lon: 114.5944, tz: "Asia/Makassar", flag: "🇮🇩", id: "Banjarmasin", en: "Banjarmasin", zh: "马辰", aliases: ["banjarmasin","马辰"] },
+  { name: "Manado", country: "Indonesia", lat: 1.4748, lon: 124.8421, tz: "Asia/Makassar", flag: "🇮🇩", id: "Manado", en: "Manado", zh: "万鸦老", aliases: ["manado","万鸦老"] },
+  { name: "Jayapura", country: "Indonesia", lat: -2.5337, lon: 140.7181, tz: "Asia/Jayapura", flag: "🇮🇩", id: "Jayapura", en: "Jayapura", zh: "查亚普拉", aliases: ["jayapura","查亚普拉"] },
+  { name: "Lombok / Mataram", country: "Indonesia", lat: -8.5833, lon: 116.1167, tz: "Asia/Makassar", flag: "🇮🇩", id: "Mataram", en: "Mataram (Lombok)", zh: "马塔兰/龙目岛", aliases: ["mataram","lombok","龙目岛"] },
+  { name: "Balikpapan", country: "Indonesia", lat: -1.2667, lon: 116.8333, tz: "Asia/Makassar", flag: "🇮🇩", id: "Balikpapan", en: "Balikpapan", zh: "巴厘巴板", aliases: ["balikpapan","巴厘巴板"] },
+  { name: "Pontianak", country: "Indonesia", lat: -0.0263, lon: 109.3425, tz: "Asia/Pontianak", flag: "🇮🇩", id: "Pontianak", en: "Pontianak", zh: "坤甸", aliases: ["pontianak","坤甸"] },
+  { name: "Aceh / Banda Aceh", country: "Indonesia", lat: 5.5483, lon: 95.3238, tz: "Asia/Jakarta", flag: "🇮🇩", id: "Banda Aceh", en: "Banda Aceh", zh: "班达亚齐", aliases: ["banda aceh","aceh","亚齐"] },
+
+  // ===== ASIA =====
+  { name: "Tokyo", country: "Jepang", lat: 35.6762, lon: 139.6503, tz: "Asia/Tokyo", flag: "🇯🇵", id: "Tokyo", en: "Tokyo", zh: "东京", aliases: ["tokyo","东京","日本"] },
+  { name: "Osaka", country: "Jepang", lat: 34.6937, lon: 135.5023, tz: "Asia/Tokyo", flag: "🇯🇵", id: "Osaka", en: "Osaka", zh: "大阪", aliases: ["osaka","大阪"] },
+  { name: "Seoul", country: "Korea Selatan", lat: 37.5665, lon: 126.9780, tz: "Asia/Seoul", flag: "🇰🇷", id: "Seoul", en: "Seoul", zh: "首尔", aliases: ["seoul","首尔","韩国"] },
+  { name: "Beijing", country: "China", lat: 39.9042, lon: 116.4074, tz: "Asia/Shanghai", flag: "🇨🇳", id: "Beijing", en: "Beijing", zh: "北京", aliases: ["beijing","北京","中国"] },
+  { name: "Shanghai", country: "China", lat: 31.2304, lon: 121.4737, tz: "Asia/Shanghai", flag: "🇨🇳", id: "Shanghai", en: "Shanghai", zh: "上海", aliases: ["shanghai","上海"] },
+  { name: "Guangzhou", country: "China", lat: 23.1291, lon: 113.2644, tz: "Asia/Shanghai", flag: "🇨🇳", id: "Guangzhou", en: "Guangzhou", zh: "广州", aliases: ["guangzhou","广州"] },
+  { name: "Shenzhen", country: "China", lat: 22.5431, lon: 114.0579, tz: "Asia/Shanghai", flag: "🇨🇳", id: "Shenzhen", en: "Shenzhen", zh: "深圳", aliases: ["shenzhen","深圳"] },
+  { name: "Hong Kong", country: "China (HK)", lat: 22.3193, lon: 114.1694, tz: "Asia/Hong_Kong", flag: "🇭🇰", id: "Hong Kong", en: "Hong Kong", zh: "香港", aliases: ["hong kong","香港"] },
+  { name: "Taipei", country: "Taiwan", lat: 25.0330, lon: 121.5654, tz: "Asia/Taipei", flag: "🇹🇼", id: "Taipei", en: "Taipei", zh: "台北", aliases: ["taipei","台北","台湾"] },
+  { name: "Singapore", country: "Singapura", lat: 1.3521, lon: 103.8198, tz: "Asia/Singapore", flag: "🇸🇬", id: "Singapore", en: "Singapore", zh: "新加坡", aliases: ["singapore","新加坡"] },
+  { name: "Kuala Lumpur", country: "Malaysia", lat: 3.1390, lon: 101.6869, tz: "Asia/Kuala_Lumpur", flag: "🇲🇾", id: "Kuala Lumpur", en: "Kuala Lumpur", zh: "吉隆坡", aliases: ["kuala lumpur","吉隆坡","马来西亚"] },
+  { name: "Bangkok", country: "Thailand", lat: 13.7563, lon: 100.5018, tz: "Asia/Bangkok", flag: "🇹🇭", id: "Bangkok", en: "Bangkok", zh: "曼谷", aliases: ["bangkok","曼谷","泰国"] },
+  { name: "Manila", country: "Filipina", lat: 14.5995, lon: 120.9842, tz: "Asia/Manila", flag: "🇵🇭", id: "Manila", en: "Manila", zh: "马尼拉", aliases: ["manila","马尼拉","菲律宾"] },
+  { name: "Ho Chi Minh", country: "Vietnam", lat: 10.8231, lon: 106.6297, tz: "Asia/Ho_Chi_Minh", flag: "🇻🇳", id: "Ho Chi Minh", en: "Ho Chi Minh City", zh: "胡志明市", aliases: ["ho chi minh","saigon","胡志明","越南"] },
+  { name: "Hanoi", country: "Vietnam", lat: 21.0278, lon: 105.8342, tz: "Asia/Bangkok", flag: "🇻🇳", id: "Hanoi", en: "Hanoi", zh: "河内", aliases: ["hanoi","河内"] },
+  { name: "Mumbai", country: "India", lat: 19.0760, lon: 72.8777, tz: "Asia/Kolkata", flag: "🇮🇳", id: "Mumbai", en: "Mumbai", zh: "孟买", aliases: ["mumbai","孟买","印度"] },
+  { name: "New Delhi", country: "India", lat: 28.6139, lon: 77.2090, tz: "Asia/Kolkata", flag: "🇮🇳", id: "New Delhi", en: "New Delhi", zh: "新德里", aliases: ["delhi","新德里"] },
+  { name: "Dhaka", country: "Bangladesh", lat: 23.8103, lon: 90.4125, tz: "Asia/Dhaka", flag: "🇧🇩", id: "Dhaka", en: "Dhaka", zh: "达卡", aliases: ["dhaka","达卡"] },
+  { name: "Dubai", country: "UAE", lat: 25.2048, lon: 55.2708, tz: "Asia/Dubai", flag: "🇦🇪", id: "Dubai", en: "Dubai", zh: "迪拜", aliases: ["dubai","迪拜","阿联酋"] },
+  { name: "Riyadh", country: "Arab Saudi", lat: 24.7136, lon: 46.6753, tz: "Asia/Riyadh", flag: "🇸🇦", id: "Riyadh", en: "Riyadh", zh: "利雅得", aliases: ["riyadh","利雅得","沙特"] },
+  { name: "Tehran", country: "Iran", lat: 35.6892, lon: 51.3890, tz: "Asia/Tehran", flag: "🇮🇷", id: "Tehran", en: "Tehran", zh: "德黑兰", aliases: ["tehran","德黑兰"] },
+  { name: "Doha", country: "Qatar", lat: 25.2854, lon: 51.5310, tz: "Asia/Qatar", flag: "🇶🇦", id: "Doha", en: "Doha", zh: "多哈", aliases: ["doha","多哈"] },
+
+  // ===== EROPA =====
+  { name: "London", country: "Inggris", lat: 51.5074, lon: -0.1278, tz: "Europe/London", flag: "🇬🇧", id: "London", en: "London", zh: "伦敦", aliases: ["london","伦敦","英国"] },
+  { name: "Paris", country: "Prancis", lat: 48.8566, lon: 2.3522, tz: "Europe/Paris", flag: "🇫🇷", id: "Paris", en: "Paris", zh: "巴黎", aliases: ["paris","巴黎","法国"] },
+  { name: "Berlin", country: "Jerman", lat: 52.5200, lon: 13.4050, tz: "Europe/Berlin", flag: "🇩🇪", id: "Berlin", en: "Berlin", zh: "柏林", aliases: ["berlin","柏林","德国"] },
+  { name: "Roma", country: "Italia", lat: 41.9028, lon: 12.4964, tz: "Europe/Rome", flag: "🇮🇹", id: "Roma", en: "Rome", zh: "罗马", aliases: ["roma","rome","罗马","意大利"] },
+  { name: "Madrid", country: "Spanyol", lat: 40.4168, lon: -3.7038, tz: "Europe/Madrid", flag: "🇪🇸", id: "Madrid", en: "Madrid", zh: "马德里", aliases: ["madrid","马德里","西班牙"] },
+  { name: "Amsterdam", country: "Belanda", lat: 52.3676, lon: 4.9041, tz: "Europe/Amsterdam", flag: "🇳🇱", id: "Amsterdam", en: "Amsterdam", zh: "阿姆斯特丹", aliases: ["amsterdam","阿姆斯特丹","荷兰"] },
+  { name: "Barcelona", country: "Spanyol", lat: 41.3874, lon: 2.1686, tz: "Europe/Madrid", flag: "🇪🇸", id: "Barcelona", en: "Barcelona", zh: "巴塞罗那", aliases: ["barcelona","巴塞罗那"] },
+  { name: "Vienna", country: "Austria", lat: 48.2082, lon: 16.3738, tz: "Europe/Vienna", flag: "🇦🇹", id: "Vienna", en: "Vienna", zh: "维也纳", aliases: ["vienna","维也纳"] },
+  { name: "Warsaw", country: "Polandia", lat: 52.2297, lon: 21.0122, tz: "Europe/Warsaw", flag: "🇵🇱", id: "Warsaw", en: "Warsaw", zh: "华沙", aliases: ["warsaw","华沙"] },
+  { name: "Moscow", country: "Rusia", lat: 55.7558, lon: 37.6173, tz: "Europe/Moscow", flag: "🇷🇺", id: "Moscow", en: "Moscow", zh: "莫斯科", aliases: ["moscow","莫斯科","俄罗斯"] },
+  { name: "Istanbul", country: "Turki", lat: 41.0082, lon: 28.9784, tz: "Europe/Istanbul", flag: "🇹🇷", id: "Istanbul", en: "Istanbul", zh: "伊斯坦布尔", aliases: ["istanbul","伊斯坦布尔","土耳其"] },
+  { name: "Athens", country: "Yunani", lat: 37.9838, lon: 23.7275, tz: "Europe/Athens", flag: "🇬🇷", id: "Athens", en: "Athens", zh: "雅典", aliases: ["athens","雅典"] },
+  { name: "Stockholm", country: "Swedia", lat: 59.3293, lon: 18.0686, tz: "Europe/Stockholm", flag: "🇸🇪", id: "Stockholm", en: "Stockholm", zh: "斯德哥尔摩", aliases: ["stockholm","斯德哥尔摩"] },
+  { name: "Zurich", country: "Swiss", lat: 47.3769, lon: 8.5417, tz: "Europe/Zurich", flag: "🇨🇭", id: "Zurich", en: "Zurich", zh: "苏黎世", aliases: ["zurich","苏黎世"] },
+  { name: "Lisbon", country: "Portugal", lat: 38.7223, lon: -9.1393, tz: "Europe/Lisbon", flag: "🇵🇹", id: "Lisbon", en: "Lisbon", zh: "里斯本", aliases: ["lisbon","里斯本"] },
+  { name: "Prague", country: "Ceko", lat: 50.0755, lon: 14.4378, tz: "Europe/Prague", flag: "🇨🇿", id: "Prague", en: "Prague", zh: "布拉格", aliases: ["prague","布拉格"] },
+
+  // ===== AMERIKA =====
+  { name: "New York", country: "Amerika Serikat", lat: 40.7128, lon: -74.0060, tz: "America/New_York", flag: "🇺🇸", id: "New York", en: "New York", zh: "纽约", aliases: ["new york","纽约","美国"] },
+  { name: "Los Angeles", country: "Amerika Serikat", lat: 34.0522, lon: -118.2437, tz: "America/Los_Angeles", flag: "🇺🇸", id: "Los Angeles", en: "Los Angeles", zh: "洛杉矶", aliases: ["los angeles","la","洛杉矶"] },
+  { name: "Chicago", country: "Amerika Serikat", lat: 41.8781, lon: -87.6298, tz: "America/Chicago", flag: "🇺🇸", id: "Chicago", en: "Chicago", zh: "芝加哥", aliases: ["chicago","芝加哥"] },
+  { name: "San Francisco", country: "Amerika Serikat", lat: 37.7749, lon: -122.4194, tz: "America/Los_Angeles", flag: "🇺🇸", id: "San Francisco", en: "San Francisco", zh: "旧金山", aliases: ["san francisco","旧金山","三藩市"] },
+  { name: "Washington DC", country: "Amerika Serikat", lat: 38.9072, lon: -77.0369, tz: "America/New_York", flag: "🇺🇸", id: "Washington", en: "Washington D.C.", zh: "华盛顿", aliases: ["washington","dc","华盛顿"] },
+  { name: "Seattle", country: "Amerika Serikat", lat: 47.6062, lon: -122.3321, tz: "America/Los_Angeles", flag: "🇺🇸", id: "Seattle", en: "Seattle", zh: "西雅图", aliases: ["seattle","西雅图"] },
+  { name: "Toronto", country: "Kanada", lat: 43.6532, lon: -79.3832, tz: "America/Toronto", flag: "🇨🇦", id: "Toronto", en: "Toronto", zh: "多伦多", aliases: ["toronto","多伦多","加拿大"] },
+  { name: "Vancouver", country: "Kanada", lat: 49.2827, lon: -123.1207, tz: "America/Vancouver", flag: "🇨🇦", id: "Vancouver", en: "Vancouver", zh: "温哥华", aliases: ["vancouver","温哥华"] },
+  { name: "Mexico City", country: "Meksiko", lat: 19.4326, lon: -99.1332, tz: "America/Mexico_City", flag: "🇲🇽", id: "Mexico City", en: "Mexico City", zh: "墨西哥城", aliases: ["mexico city","墨西哥城","墨西哥"] },
+  { name: "São Paulo", country: "Brasil", lat: -23.5505, lon: -46.6333, tz: "America/Sao_Paulo", flag: "🇧🇷", id: "São Paulo", en: "Sao Paulo", zh: "圣保罗", aliases: ["sao paulo","são paulo","圣保罗","巴西"] },
+  { name: "Rio de Janeiro", country: "Brasil", lat: -22.9068, lon: -43.1729, tz: "America/Sao_Paulo", flag: "🇧🇷", id: "Rio de Janeiro", en: "Rio de Janeiro", zh: "里约热内卢", aliases: ["rio","里约"] },
+  { name: "Buenos Aires", country: "Argentina", lat: -34.6037, lon: -58.3816, tz: "America/Argentina/Buenos_Aires", flag: "🇦🇷", id: "Buenos Aires", en: "Buenos Aires", zh: "布宜诺斯艾利斯", aliases: ["buenos aires","布宜诺斯艾利斯"] },
+  { name: "Lima", country: "Peru", lat: -12.0464, lon: -77.0428, tz: "America/Lima", flag: "🇵🇪", id: "Lima", en: "Lima", zh: "利马", aliases: ["lima","利马"] },
+  { name: "Bogota", country: "Kolombia", lat: 4.7110, lon: -74.0721, tz: "America/Bogota", flag: "🇨🇴", id: "Bogota", en: "Bogota", zh: "波哥大", aliases: ["bogota","波哥大"] },
+  { name: "Honolulu", country: "Hawaii, AS", lat: 21.3069, lon: -157.8583, tz: "Pacific/Honolulu", flag: "🇺🇸", id: "Honolulu", en: "Honolulu", zh: "火奴鲁鲁", aliases: ["honolulu","火奴鲁鲁","檀香山"] },
+  { name: "Anchorage", country: "Alaska, AS", lat: 61.2181, lon: -149.9003, tz: "America/Anchorage", flag: "🇺🇸", id: "Anchorage", en: "Anchorage", zh: "安克雷奇", aliases: ["anchorage","安克雷奇"] },
+
+  // ===== OSEANIA =====
+  { name: "Sydney", country: "Australia", lat: -33.8688, lon: 151.2093, tz: "Australia/Sydney", flag: "🇦🇺", id: "Sydney", en: "Sydney", zh: "悉尼", aliases: ["sydney","悉尼","澳大利亚"] },
+  { name: "Melbourne", country: "Australia", lat: -37.8136, lon: 144.9631, tz: "Australia/Melbourne", flag: "🇦🇺", id: "Melbourne", en: "Melbourne", zh: "墨尔本", aliases: ["melbourne","墨尔本"] },
+  { name: "Brisbane", country: "Australia", lat: -27.4698, lon: 153.0251, tz: "Australia/Brisbane", flag: "🇦🇺", id: "Brisbane", en: "Brisbane", zh: "布里斯班", aliases: ["brisbane","布里斯班"] },
+  { name: "Auckland", country: "Selandia Baru", lat: -36.8485, lon: 174.7633, tz: "Pacific/Auckland", flag: "🇳🇿", id: "Auckland", en: "Auckland", zh: "奥克兰", aliases: ["auckland","奥克兰","新西兰"] },
+
+  // ===== AFRIKA/TIMUR TENGAH =====
+  { name: "Cairo", country: "Mesir", lat: 30.0444, lon: 31.2357, tz: "Africa/Cairo", flag: "🇪🇬", id: "Cairo", en: "Cairo", zh: "开罗", aliases: ["cairo","开罗","埃及"] },
+  { name: "Lagos", country: "Nigeria", lat: 6.5244, lon: 3.3792, tz: "Africa/Lagos", flag: "🇳🇬", id: "Lagos", en: "Lagos", zh: "拉各斯", aliases: ["lagos","拉各斯","尼日利亚"] },
+  { name: "Nairobi", country: "Kenya", lat: -1.2921, lon: 36.8219, tz: "Africa/Nairobi", flag: "🇰🇪", id: "Nairobi", en: "Nairobi", zh: "内罗毕", aliases: ["nairobi","内罗毕"] },
+  { name: "Johannesburg", country: "Afrika Selatan", lat: -26.2041, lon: 28.0473, tz: "Africa/Johannesburg", flag: "🇿🇦", id: "Johannesburg", en: "Johannesburg", zh: "约翰内斯堡", aliases: ["johannesburg","johannesburg","约堡"] },
+  { name: "Casablanca", country: "Maroko", lat: 33.5731, lon: -7.5898, tz: "Africa/Casablanca", flag: "🇲🇦", id: "Casablanca", en: "Casablanca", zh: "卡萨布兰卡", aliases: ["casablanca","卡萨布兰卡"] },
+];
+
+// ============ STATE ============
+let cityData = {};   // city.id -> weather data
+let selectedCity = "Jakarta";
+let currentLang = 'id';
+
+// ============ HELPER: safe element id from city ============
+function cityKey(c) { return (c.id || c.name).replace(/[^A-Za-z0-9]/g, ''); }
+
+// ============ i18n TRANSLATIONS ============
+const I18N = {
+  id: {
+    title: '🌧️ Tempias — Jam & Cuaca Seluruh Dunia',
+    subtitle: '🕒 Timer Real-Time Seluruh Dunia • ⛅ Cuaca Terkini & Prediksi',
+    live: 'LIVE · Real Time',
+    searchPlaceholder: '🔍 Cari kota / negara...',
+    hint: '💡 Klik kartu kota untuk melihat cuaca detail & prediksi 7 hari',
+    loading: 'Memuat data cuaca seluruh dunia...',
+    loadingCard: 'Memuat cuaca...',
+    cityNotFound: 'Kota tidak ditemukan. Coba kata kunci lain. 🧐',
+    footer: 'Data cuaca real-time dari',
+    footerSrc: 'Open-Meteo',
+    footerSrcDesc: '· Sumber tepercaya & gratis tanpa API key',
+    footerTime: 'Waktu berdasarkan zona waktu w3c /time.is',
+    timezone: 'Zona waktu:',
+    hourlyTitle: '📈 Prediksi Per Jam',
+    forecastTitle: '🗓️ Prakiraan Cuaca 7 Hari',
+    today: 'Hari Ini',
+    feels: 'Terasa',
+    humidity: 'Kelembaban',
+    wind: 'Angin',
+    min: 'Min',
+    kmh: 'km/j',
+    loadingForecast: 'Mengambil data prediksi 7 hari... ⏳',
+    done: 'Selesai!',
+    citiesLoaded: 'kota dimuat. Klik kota untuk lihat prediksi 7 hari.',
+    days: ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],
+  },
+  en: {
+    title: '🌧️ Tempias — World Clock & Weather',
+    subtitle: '🕒 Real-Time World Timer • ⛅ Live Weather & Forecast',
+    live: 'LIVE · Real Time',
+    searchPlaceholder: '🔍 Search city / country...',
+    hint: '💡 Click a city card for detailed weather & 7-day forecast',
+    loading: 'Loading weather data from around the world...',
+    loadingCard: 'Loading weather...',
+    cityNotFound: 'City not found. Try another keyword. 🧐',
+    footer: 'Real-time weather data from',
+    footerSrc: 'Open-Meteo',
+    footerSrcDesc: '· Reliable source, free, no API key needed',
+    footerTime: 'Time based on W3C / time.is time zones',
+    timezone: 'Time zone:',
+    hourlyTitle: '📈 Hourly Forecast',
+    forecastTitle: '🗓️ 7-Day Forecast',
+    today: 'Today',
+    feels: 'Feels like',
+    humidity: 'Humidity',
+    wind: 'Wind',
+    min: 'Min',
+    kmh: 'km/h',
+    loadingForecast: 'Fetching 7-day forecast... ⏳',
+    done: 'Done!',
+    citiesLoaded: 'cities loaded. Click a city for the 7-day forecast.',
+    days: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+  },
+  zh: {
+    title: '🌧️ 坦皮亚斯 — 世界时钟与天气',
+    subtitle: '🕒 全球实时时钟 • ⛅ 实时天气与预报',
+    live: '实时 · 全球时间',
+    searchPlaceholder: '🔍 搜索城市 / 国家...',
+    hint: '💡 点击城市卡片查看详细天气和 7 天预报',
+    loading: '正在加载全球天气数据...',
+    loadingCard: '正在加载天气...',
+    cityNotFound: '未找到城市。请尝试其他关键词。🧐',
+    footer: '实时天气数据来自',
+    footerSrc: 'Open-Meteo',
+    footerSrcDesc: '· 可靠来源，免费，无需 API 密钥',
+    footerTime: '时间基于 W3C / time.is 时区',
+    timezone: '时区：',
+    hourlyTitle: '📈 小时预报',
+    forecastTitle: '🗓️ 7 天天气预报',
+    today: '今天',
+    feels: '体感',
+    humidity: '湿度',
+    wind: '风',
+    min: '最低',
+    kmh: '公里/时',
+    loadingForecast: '正在获取 7 天预报... ⏳',
+    done: '完成！',
+    citiesLoaded: '个城市已加载。点击城市查看 7 天预报。',
+    days: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+  },
+};
+function t(key) { return (I18N[currentLang] && I18N[currentLang][key]) || ''; }
+
+// City display name in current language
+function cityName(c) {
+  if (currentLang === 'zh') return c.zh || c.name;
+  if (currentLang === 'en') return c.en || c.name;
+  return c.name;
+}
+// Country display name in current language
+function cityCountry(c) {
+  // translate known country names
+  const map = {
+    'Indonesia': { id:'Indonesia', en:'Indonesia', zh:'印度尼西亚' },
+    'Jepang': { en:'Japan', zh:'日本' },
+    'Korea Selatan': { en:'South Korea', zh:'韩国' },
+    'China': { en:'China', zh:'中国' },
+    'China (HK)': { en:'Hong Kong, China', zh:'中国香港' },
+    'Taiwan': { en:'Taiwan', zh:'台湾' },
+    'Singapura': { en:'Singapore', zh:'新加坡' },
+    'Malaysia': { en:'Malaysia', zh:'马来西亚' },
+    'Thailand': { en:'Thailand', zh:'泰国' },
+    'Filipina': { en:'Philippines', zh:'菲律宾' },
+    'Vietnam': { en:'Vietnam', zh:'越南' },
+    'India': { en:'India', zh:'印度' },
+    'Bangladesh': { en:'Bangladesh', zh:'孟加拉国' },
+    'UAE': { en:'United Arab Emirates', zh:'阿联酋' },
+    'Arab Saudi': { en:'Saudi Arabia', zh:'沙特阿拉伯' },
+    'Iran': { en:'Iran', zh:'伊朗' },
+    'Qatar': { en:'Qatar', zh:'卡塔尔' },
+    'Inggris': { en:'United Kingdom', zh:'英国' },
+    'Prancis': { en:'France', zh:'法国' },
+    'Jerman': { en:'Germany', zh:'德国' },
+    'Italia': { en:'Italy', zh:'意大利' },
+    'Spanyol': { en:'Spain', zh:'西班牙' },
+    'Belanda': { en:'Netherlands', zh:'荷兰' },
+    'Austria': { en:'Austria', zh:'奥地利' },
+    'Polandia': { en:'Poland', zh:'波兰' },
+    'Rusia': { en:'Russia', zh:'俄罗斯' },
+    'Turki': { en:'Turkey', zh:'土耳其' },
+    'Yunani': { en:'Greece', zh:'希腊' },
+    'Swedia': { en:'Sweden', zh:'瑞典' },
+    'Swiss': { en:'Switzerland', zh:'瑞士' },
+    'Portugal': { en:'Portugal', zh:'葡萄牙' },
+    'Ceko': { en:'Czech Republic', zh:'捷克' },
+    'Amerika Serikat': { en:'United States', zh:'美国' },
+    'Kanada': { en:'Canada', zh:'加拿大' },
+    'Meksiko': { en:'Mexico', zh:'墨西哥' },
+    'Brasil': { en:'Brazil', zh:'巴西' },
+    'Argentina': { en:'Argentina', zh:'阿根廷' },
+    'Peru': { en:'Peru', zh:'秘鲁' },
+    'Kolombia': { en:'Colombia', zh:'哥伦比亚' },
+    'Hawaii, AS': { en:'Hawaii, USA', zh:'夏威夷' },
+    'Alaska, AS': { en:'Alaska, USA', zh:'阿拉斯加' },
+    'Australia': { en:'Australia', zh:'澳大利亚' },
+    'Selandia Baru': { en:'New Zealand', zh:'新西兰' },
+    'Mesir': { en:'Egypt', zh:'埃及' },
+    'Nigeria': { en:'Nigeria', zh:'尼日利亚' },
+    'Kenya': { en:'Kenya', zh:'肯尼亚' },
+    'Afrika Selatan': { en:'South Africa', zh:'南非' },
+    'Maroko': { en:'Morocco', zh:'摩洛哥' },
+  };
+  const m = map[c.country];
+  if (!m) return c.country;
+  if (currentLang === 'zh') return m.zh;
+  if (currentLang === 'en') return m.en;
+  return c.country;
+}
+
+// ============ WEATHER CODE MAPPING (WMO) ============
+function wmoIcon(code, isDay = true) {
+  const d = isDay ? "🌤️" : "🌙";
+  switch(code) {
+    case 0: return isDay ? "☀️" : "🌙";
+    case 1: return isDay ? "🌤️" : "🌙";
+    case 2: return "⛅";
+    case 3: return "☁️";
+    case 45: case 48: return "🌫️";
+    case 51: case 53: case 55: return "🌦️";
+    case 56: case 57: return "🌧️";
+    case 61: return "🌧️";
+    case 63: return "🌧️";
+    case 65: return "🌧️";
+    case 66: case 67: return "🌧️";
+    case 71: return "🌨️";
+    case 73: case 75: case 77: return "❄️";
+    case 80: case 81: case 82: return "🌧️";
+    case 85: case 86: return "🌨️";
+    case 95: return "⛈️";
+    case 96: case 99: return "⛈️";
+    default: return d;
+  }
+}
+function wmoDesc(code) {
+  const map = {
+    id: {
+      0: "Cerah", 1: "Sebagian Cerah", 2: "Berawan", 3: "Mendung",
+      45: "Kabut", 48: "Kabut Beku", 51: "Gerimis Ringan", 53: "Gerimis",
+      55: "Gerimis Deras", 56: "Gerimis Beku", 57: "Gerimis Beku Deras",
+      61: "Hujan Ringan", 63: "Hujan", 65: "Hujan Deras",
+      66: "Hujan Beku", 67: "Hujan Beku Deras",
+      71: "Salju Ringan", 73: "Salju", 75: "Salju Tebal", 77: "Butiran Salju",
+      80: "Hujan Ringan", 81: "Hujan", 82: "Hujan Sangat Deras",
+      85: "Salju Ringan", 86: "Salju Tebal",
+      95: "Badai Petir", 96: "Badai Petir & Hujan Es", 99: "Badai Petir & Hujan Es Berat"
+    },
+    en: {
+      0: "Clear", 1: "Partly Cloudy", 2: "Cloudy", 3: "Overcast",
+      45: "Fog", 48: "Freezing Fog", 51: "Light Drizzle", 53: "Drizzle",
+      55: "Heavy Drizzle", 56: "Freezing Drizzle", 57: "Dense Freezing Drizzle",
+      61: "Light Rain", 63: "Rain", 65: "Heavy Rain",
+      66: "Freezing Rain", 67: "Heavy Freezing Rain",
+      71: "Light Snow", 73: "Snow", 75: "Heavy Snow", 77: "Snow Grains",
+      80: "Light Rain", 81: "Rain", 82: "Violent Rain",
+      85: "Light Snow", 86: "Heavy Snow",
+      95: "Thunderstorm", 96: "Thunderstorm & Hail", 99: "Severe Thunderstorm & Hail"
+    },
+    zh: {
+      0: "晴", 1: "少云", 2: "多云", 3: "阴",
+      45: "雾", 48: "冻雾", 51: "小雨滴", 53: "毛毛雨",
+      55: "大雨滴", 56: "冻毛毛雨", 57: "强冻毛毛雨",
+      61: "小雨", 63: "雨", 65: "大雨",
+      66: "冻雨", 67: "强冻雨",
+      71: "小雪", 73: "雪", 75: "大雪", 77: "雪粒",
+      80: "小雨", 81: "雨", 82: "暴雨",
+      85: "小雪", 86: "大雪",
+      95: "雷暴", 96: "雷暴和冰雹", 99: "强雷暴和冰雹"
+    }
+  };
+  const m = (map[currentLang] || map.id)[code];
+  return m || (currentLang==='id' ? "Tidak Diketahui" : currentLang==='zh' ? '未知' : 'Unknown');
+}
+
+// ============ WEATHER ANIMATIONS ============
+function weatherAnimation(code) {
+  let html = '';
+  let cls = 'anim-layer';
+  // clouds
+  if ([1,2,3].includes(code)) {
+    html += '<div class="cloud" style="width:80px;height:25px;top:20px;left:10%;animation-duration:35s"></div>';
+    html += '<div class="cloud" style="width:60px;height:20px;top:50px;left:55%;animation-duration:25s"></div>';
+  } else if (code >= 45 && code <= 48) { // fog
+    for (let i=0;i<4;i++) {
+      html += `<div class="fog-cloud" style="top:${20+i*20}px;opacity:${0.2-i*0.02}"></div>`;
+    }
+  }
+  // rain
+  if ([51,53,55,61,63,65,80,81,82,56,57,66,67].includes(code)) {
+    for (let i=0;i<8;i++) {
+      html += `<div class="rain-drop" style="left:${5+i*12}%;top:${Math.random()*20}px;height:${18+Math.random()*12}px;animation-delay:${i*0.1}s"></div>`;
+    }
+  }
+  // snow
+  if ([71,73,75,77,85,86].includes(code)) {
+    for (let i=0;i<6;i++) {
+      html += `<div class="snowflake" style="left:${8+i*16}%;font-size:${12+Math.random()*8}px;animation-delay:${i*0.7}s">❄</div>`;
+    }
+  }
+  // thunder
+  if ([95,96,99].includes(code)) {
+    html += '<div class="lightning" style="left:40%;top:30%">⚡</div>';
+    // add rain with thunder
+    for (let i=0;i<8;i++) {
+      html += `<div class="rain-drop" style="left:${5+i*12}%;top:${Math.random()*20}px;animation-delay:${i*0.1}s"></div>`;
+    }  }
+  return `<div class="${cls}" style="top:0;left:0;right:0;bottom:0;overflow:hidden;position:absolute;z-index:1">${html}</div>`;
+}
+
+// ============ TIME HELPERS ============
+function localeTag() {
+  return currentLang === 'zh' ? 'zh-CN' : currentLang === 'en' ? 'en-GB' : 'id-ID';
+}
+function getTimeInTZ(tz) {
+  try {
+    return new Intl.DateTimeFormat(localeTag(), {
+      timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    }).format(new Date());
+  } catch (e) {
+    return new Date().toLocaleTimeString(localeTag());
+  }
+}
+function getDateInTZ(tz) {
+  try {
+    return new Intl.DateTimeFormat(localeTag(), {
+      timeZone: tz, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    }).format(new Date());
+  } catch (e) {
+    return new Date().toLocaleDateString(localeTag());
+  }
+}
+function isDayInTZ(tz) {
+  try {
+    const h = parseInt(new Intl.DateTimeFormat('en-GB', {
+      timeZone: tz, hour: '2-digit', hour12: false
+    }).format(new Date()));
+    return h >= 6 && h < 18;
+  } catch (e) { return true; }
+}
+
+// ============ FETCH WEATHER (Open-Meteo) ============
+async function fetchWeather(city) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,is_day&hourly=temperature_2m,weather_code,relative_humidity_2m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=7`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    console.error('Weather fetch error for', city.name, e);
+    return null;
+  }
+}
+
+// ============ RENDER CITY CARD ============
+function renderCityCard(city) {
+  const key = cityKey(city);
+  const data = cityData[key];
+  const cname = cityName(city);
+  return `
+  <div class="city-card ${key===selectedCity?'selected':''}" id="card-${key}" onclick="selectCity('${key}')">
+    <div class="city-header">
+      <div>
+        <div class="city-name">${city.flag} ${cname}</div>
+        <div class="city-country">${cityCountry(city)}</div>
+      </div>
+      <div class="small">🕐 ${city.tz.split('/').pop()}</div>
+    </div>
+    <div>
+      <div class="card-clock" id="clock-${key}">--:--:--</div>
+      <div class="card-date" id="date-${key}">--</div>
+    </div>
+    <div class="weather-zone" id="weather-${key}">
+      ${data ? renderWeatherBlock(city) : '<div class="loading small"></div><div class="small">'+t('loadingCard')+'</div>'}
+    </div>
+  </div>`;
+}
+
+function renderWeatherBlock(city) {
+  const key = cityKey(city);
+  const cur = cityData[key].current;
+  const icon = wmoIcon(cur.weather_code, cur.is_day);
+  const anim = weatherAnimation(cur.weather_code);
+  return `
+    ${anim}
+    <div class="weather-main" style="position:relative;z-index:2">
+      <span class="weather-icon">${icon}</span>
+      <span class="temp">${Math.round(cur.temperature_2m)}°C</span>
+      <span class="small" style="margin-left:auto">💨 ${Math.round(cur.wind_speed_10m)} ${t('kmh')}</span>
+    </div>
+    <div class="weather-detail" style="position:relative;z-index:2">
+      <span>${wmoDesc(cur.weather_code)}</span>
+      <span style="margin-left:8px" class="small">💧 ${cur.relative_humidity_2m}% | ${t('feels')} ${Math.round(cur.apparent_temperature)}°</span>
+    </div>`;
+}
+
+// ============ SEARCH MATCH (multilingual) ============
+function cityMatches(c, q) {
+  if (!q) return true;
+  q = q.toLowerCase();
+  const fields = [c.name, c.id, c.country, (c.en||''), (c.zh||''), (c.id===c.name?c.name:c.id)];
+  if (Array.isArray(c.aliases)) fields.push(...c.aliases);
+  // also translated country + known country transliterations
+  fields.push(cityCountry(c));
+  return fields.some(f => f && f.toLowerCase().includes(q));
+}
+
+// ============ RENDER ALL ============
+function renderGrid(filter = '') {
+  const grid = document.getElementById('citiesGrid');
+  const f = (filter||'').toLowerCase();
+  const cities = CITIES.filter(c => cityMatches(c, f));
+  if (cities.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px">'+t('cityNotFound')+'</div>';
+    return;
+  }
+  grid.innerHTML = cities.map(renderCityCard).join('');
+  if (!window._clockTimer) {
+    window._clockTimer = setInterval(updateAllClocks, 1000);
+  }
+}
+
+function updateAllClocks() {
+  CITIES.forEach(city => {
+    const key = cityKey(city);
+    const el = document.getElementById('clock-' + key);
+    if (el) {
+      try { el.textContent = getTimeInTZ(city.tz).replace(/\./g, ':'); } catch(e) {}
+    }
+    const dEl = document.getElementById('date-' + key);
+    if (dEl) {
+      try { dEl.textContent = getDateInTZ(city.tz).split(' ').slice(0,2).join(' '); } catch(e){}
+    }
+  });
+  updateMainClock();
+}
+
+function updateMainClock() {
+  const city = CITIES.find(c => cityKey(c) === selectedCity);
+  if (!city) return;
+  document.getElementById('mainLocation').textContent = `📍 ${city.flag} ${cityName(city)}, ${cityCountry(city)}`;
+  document.getElementById('mainClock').textContent = getTimeInTZ(city.tz).replace(/\./g, ':');
+  document.getElementById('mainDate').textContent = getDateInTZ(city.tz);
+}
+
+// ============ SELECT CITY ============
+function selectCity(key) {
+  selectedCity = key;
+  document.querySelectorAll('.city-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('card-' + key);
+  if (card) card.classList.add('selected');
+  updateMainClock();
+  const city = CITIES.find(c => cityKey(c) === key);
+  if (city && cityData[key]) {
+    const w = document.getElementById('weather-' + key);
+    if (w) w.innerHTML = renderWeatherBlock(city);
+  }
+}
+
+// ============ MODAL (FORECAST) ============
+function openModal(key) {
+  const city = CITIES.find(c => cityKey(c) === key);
+  if (!city || !cityData[key]) return;
+  showToast(t('loadingForecast'));
+  const d = cityData[key];
+  document.getElementById('modalTitle').textContent = `${city.flag} ${cityName(city)}, ${cityCountry(city)}`;
+  document.getElementById('modalTimezone').textContent = `${t('timezone')} ${city.tz}`;
+  const cur = d.current;
+  document.getElementById('modalIcon').textContent = wmoIcon(cur.weather_code, cur.is_day);
+  document.getElementById('modalTemp').textContent = `${Math.round(cur.temperature_2m)}°C`;
+  document.getElementById('modalDesc').textContent = wmoDesc(cur.weather_code);
+  document.getElementById('modalClock').textContent = getTimeInTZ(city.tz).replace(/\./g, ':');
+  document.getElementById('modalDate').textContent = getDateInTZ(city.tz);
+  document.getElementById('modalDetails').textContent =
+    `💧 ${t('humidity')} ${cur.relative_humidity_2m}% · ${t('feels')} ${Math.round(cur.apparent_temperature)}°C · 💨 ${t('wind')} ${Math.round(cur.wind_speed_10m)} ${t('kmh')}`;
+
+  const hourlyScroll = document.getElementById('hourlyScroll');
+  let hhtml = '';
+  const now = new Date();
+  for (let i=0; i<16; i++) {
+    const tt = new Date(now.getTime() + i*6*3600*1000);
+    const hh = String(tt.getHours()).padStart(2,'0')+':00';
+    const wc = d.hourly?.weather_code ? d.hourly.weather_code[i*3] || 1 : 1;
+    const tp = d.hourly?.temperature_2m ? d.hourly.temperature_2m[i*3] || 0 : 0;
+    hhtml += `<div class="hourly-item">
+      <div class="small">${hh}</div>
+      <div style="font-size:1.6rem">${wmoIcon(wc, true)}</div>
+      <div class="small">${Math.round(tp)}°</div>
+    </div>`;
+  }
+  hourlyScroll.innerHTML = hhtml;
+
+  const days = t('days');
+  const fGrid = document.getElementById('forecastGrid');
+  let fhtml = '';
+  if (d.daily) {
+    for (let i=0; i<7; i++) {
+      const dayName = days[new Date(now.getTime()+i*86400000).getDay()];
+      const wc = d.daily.weather_code[i] || 1;
+      const max = Math.round(d.daily.temperature_2m_max[i]);
+      const min = Math.round(d.daily.temperature_2m_min[i]);
+      fhtml += `<div class="forecast-day">
+        <div class="day">${i===0?t('today'):dayName}</div>
+        <div class="f-icon">${wmoIcon(wc, true)}</div>
+        <div class="small">${wmoDesc(wc)}</div>
+        <div class="f-temp">${max}°</div>
+        <div class="small">${t('min')} ${min}°</div>
+      </div>`;
+    }
+  }
+  fGrid.innerHTML = fhtml;
+
+  document.getElementById('modalOverlay').classList.add('show');
+  if (window._modalTimer) clearInterval(window._modalTimer);
+  window._modalTimer = setInterval(() => {
+    document.getElementById('modalClock').textContent = getTimeInTZ(city.tz).replace(/\./g, ':');
+    document.getElementById('modalDate').textContent = getDateInTZ(city.tz);
+  }, 1000);
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  if (window._modalTimer) clearInterval(window._modalTimer);
+}
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ============ TOAST ============
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============ LOAD ALL WEATHER ============
+async function loadAllWeather() {
+  const loading = document.getElementById('loadingIndicator');
+  loading.classList.remove('hidden');
+  let loaded = 0;
+  const total = CITIES.length;
+
+  for (let i=0; i<CITIES.length; i++) {
+    const city = CITIES[i];
+    const key = cityKey(city);
+    const data = await fetchWeather(city);
+    if (data) {
+      cityData[key] = data;
+      loaded++;
+    }
+    const w = document.getElementById('weather-' + key);
+    if (w) w.innerHTML = renderWeatherBlock(city);
+    if (i % 5 === 0) renderGrid();
+  }
+
+  loading.classList.add('hidden');
+  renderGrid();
+  updateMainClock();
+  showToast(`✅ ${t('done')} ${loaded}/${total} ${t('citiesLoaded')}`);
+}
+
+// ============ LANGUAGE SWITCHER ============
+function applyLang() {
+  document.getElementById('appTitle').textContent = t('title');
+  document.getElementById('appSubtitle').textContent = t('subtitle');
+  document.getElementById('liveBadgeText').textContent = t('live');
+  document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+  document.getElementById('hintText').textContent = t('hint');
+  document.getElementById('loadingText').textContent = t('loading');
+  document.getElementById('hourlyTitle').textContent = t('hourlyTitle');
+  document.getElementById('forecastTitle').textContent = t('forecastTitle');
+  const foot = document.getElementById('footerText');
+  foot.innerHTML = `${t('footer')} <a href="https://open-meteo.com" target="_blank">${t('footerSrc')}</a> ${t('footerSrcDesc')}<br>${t('footerTime')}`;
+  // update lang buttons active state
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+  });
+  renderGrid(document.getElementById('searchInput').value);
+  updateMainClock();
+  // refresh weather display blocks for visible cards
+  CITIES.forEach(c => {
+    const key = cityKey(c);
+    if (cityData[key]) {
+      const w = document.getElementById('weather-' + key);
+      if (w) w.innerHTML = renderWeatherBlock(c);
+    }
+  });
+  document.documentElement.lang = currentLang==='zh'?'zh':currentLang==='en'?'en':'id';
+  document.title = t('title') + ' — ' + currentLang.toUpperCase();
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('wclang', lang);
+  applyLang();
+}
+
+// ============ EVENT LISTENERS ============
+document.getElementById('searchInput').addEventListener('input', function() {
+  renderGrid(this.value);
+});
+
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('.city-card');
+  if (card) {
+    const key = card.getAttribute('id').replace('card-','');
+    if (cityData[key]) {
+      openModal(key);
+    }
+  }
+});
+
+// ============ INIT ============
+(function init() {
+  const saved = localStorage.getItem('wclang');
+  if (saved && ['id','en','zh'].includes(saved)) currentLang = saved;
+  applyLang();
+  renderGrid();
+  updateMainClock();
+  setInterval(updateMainClock, 1000);
+  loadAllWeather();
+  setInterval(loadAllWeather, 10*60*1000);
+})();
+
+</script>
+</body>
+</html>
